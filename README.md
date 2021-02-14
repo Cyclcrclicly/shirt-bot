@@ -1,9 +1,7 @@
-# SHIRT BOT &middot; [![License: Unlicense](https://img.shields.io/badge/license-Unlicense-blue.svg)](http://unlicense.org/) <img alt="Python" src="https://img.shields.io/badge/python%20-%2314354C.svg?&style=for-the-badge&logo=python&logoColor=white"/>
-Shirt Bot is a discord bot which uses GPT-3 to generate text.
-Made by Cyclcrclicly (474183744685604865) on Discord.
-Support server: discord.gg/KXxnPSScdn
-<br>
-<br>
+# SHIRT BOT &middot; [![License: Unlicense](https://img.shields.io/badge/license-Unlicense-blue.svg)](https://unlicense.org/) [![Language: Python 3](https://img.shields.io/badge/language-Python%203-blue.svg)](https://python.org/)  
+Shirt Bot is a discord bot which uses GPT-3 to generate text.<br>
+Made by Cyclcrclicly#3420 (474183744685604865) on Discord.<br>
+[Support Server](https://discord.gg/KXxnPSScdn)
 # EXAMPLES
 ![example1](https://media.discordapp.net/attachments/538700981030879242/810570370829516871/example_1.png)
 ![example2](https://media.discordapp.net/attachments/538700981030879242/810570389729443900/example_2.png)
@@ -11,16 +9,14 @@ Support server: discord.gg/KXxnPSScdn
 ![example4](https://media.discordapp.net/attachments/538700981030879242/810570461942513724/example_4.png)
 ![example5](https://media.discordapp.net/attachments/538700981030879242/810570479677079562/example_5.png)
 ![example6](https://media.discordapp.net/attachments/538700981030879242/810570503349075968/example_6.png)
-<br>
-<br>
 # HELP
-<br>
 ## COMMAND HELP
-### ARGUMENT EXPLANATION (order of optional arguments matters)
+### ARGUMENT EXPLANATION
 ```
 <argument>            required argument
 [argument]            optional argument
 [argument=default]    optional argument with a default value
+The order of optional arguments matters.
 ```
 ### COMMAND ARGUMENTS
 ```
@@ -74,7 +70,6 @@ links
 links toggle [channel=message channel]
   Toggles censoring links in a channel.
 ```
-<br>
 ## SHIRT TALK HELP
 ```
 Shirt talk is a feature of Shirt Bot which lets it automatically reply to all messages sent in a channel.
@@ -82,7 +77,6 @@ By default, it's off for all channels, but you can set it up using the shirttalk
 The extras that work in shirt talk channels are '#', '# ', and '$ '.
 Shirt talk also works in DMs.
 ```
-<br>
 ## SHIRT REPLY HELP
 ```
 Shirt reply is a feature of Shirt Bot which lets it trigger when you reply to one of the bot's messages.
@@ -90,7 +84,6 @@ By default, it's off for all channels, but you can set it up using the shirtrepl
 The extras which work in shirt reply channels are '#' and '$ '.
 Shirt reply also works in DMs.
 ```
-<br>
 ## SHIRT RANDOM HELP
 ```
 Shirt random is a feature of Shirt Bot which lets it trigger randomly (customizable chance) whenever a message is sent in a channel where it's on.
@@ -98,7 +91,6 @@ By default, it's off for all channels, but you can set it up using the shirtman 
 Extras don't work here.
 Shirt random also works in DMs.
 ```
-<br>
 ## PRECEDENCE
 ```
 Precedence is a way to organize the bot's features into a hierarchy. If a feature is on/triggered, it prevents some other features from triggering.
@@ -118,7 +110,6 @@ The precedence is:
   Shirt random
     if none of the above features are on/triggered, shirt random can trigger
 ```
-<br>
 ## EXTRAS
 ```
 Extras are extra features of Shirt Bot which work in shirt talk and shirt reply. The helps for those list exactly which extras work.
@@ -130,23 +121,15 @@ Extras are:
 
   '$ '    if your message starts with '$ ', it will force Shirt Bot to start its next message with the content of your message. This way, you can force Shirt Bot to say something it otherwise may not have said.
 ```
-<br>
-<br>
 # REQUIREMENTS
-[python](https://www.python.org/) at least 3.6
-
-[regex](https://pypi.org/project/regex/)
-[aiohttp](https://pypi.org/project/aiohttp/)
-[discord.py](https://pypi.org/project/discord.py/) at least 1.6.0
-<br>
-<br>
+[python](https://www.python.org/) - at least 3.6<br>
+[regex](https://pypi.org/project/regex/)<br>
+[aiohttp](https://pypi.org/project/aiohttp/)<br>
+[discord.py](https://pypi.org/project/discord.py/) - at least 1.6.0
 # INSTRUCTIONS
 1. Install all requirements. You can use `pip install -r requirements.txt` or install them manually.
 2. Create a `config.json` file from the `config.json.template` file and fill it out with the correct information.
 3. Run `shirt_bot.py`.
-<br>
-<br>
 # CREDIT
-All the contents of the encoder folder are from https://github.com/latitudegames/GPT-3-Encoder and are thus licensed with [the MIT License](encoder/LICENSE).
-
+All the contents of the encoder folder are from https://github.com/latitudegames/GPT-3-Encoder and are thus licensed with [the MIT License](encoder/LICENSE).<br>
 URL matching regex pattern is from: https://stackoverflow.com/a/17773849

@@ -10,7 +10,7 @@ There are 6 categories:
   PRECEDENCE      {prefix}help precedence
   EXTRAS          {prefix}help extras
 
-Shirt Bot made by Cyclcrclicly (474183744685604865)
+Shirt Bot made by Cyclcrclicly#3420 (474183744685604865)
 Support server: discord.gg/KXxnPSScdn
 ```
 <{[/]}>
@@ -18,12 +18,12 @@ Support server: discord.gg/KXxnPSScdn
 <{[commands]}>
 **COMMAND HELP**
 ```
-ARGUMENT EXPLANATION (order of optional arguments matters)
+ARGUMENT EXPLANATION
 
 <argument>            required argument
 [argument]            optional argument
 [argument=default]    optional argument with a default value
-
+The order of optional arguments matters.
 
 COMMAND ARGUMENTS
 
