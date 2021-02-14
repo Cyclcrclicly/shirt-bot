@@ -493,6 +493,7 @@ async def shirt_talk_unset(ctx, channel: discord.TextChannel=None):
     await ctx.send(f"Shirt talk turned off{channelstr}.")
 
 
+# ### Shirt Reply Commands ###
 @bot.group(name="shirtreply", ignore_extra=False, invoke_without_command=True)
 async def shirt_reply(ctx):
     """Adding/removing/listing shirt reply channels."""
@@ -568,6 +569,7 @@ async def shirt_reply_unset(ctx, channel: discord.TextChannel=None):
     await ctx.send(f"Shirt reply turned off{channelstr}.")
 
 
+# ### Shirt Random Commands ###
 @bot.group(name="shirtrandom", ignore_extra=False, invoke_without_command=True)
 async def shirt_random(ctx):
     """Adding/removing/listing shirt random channels."""
@@ -653,6 +655,7 @@ async def shirt_random_unset(ctx, channel: discord.TextChannel=None):
     await ctx.send(f"Shirt random turned off{channelstr}.")
 
 
+# ### Link Commands ###
 @bot.group(name="links", ignore_extra=False, invoke_without_command=True)
 async def links(ctx):
     """Uncensoring links or listing channels with uncensored links."""
