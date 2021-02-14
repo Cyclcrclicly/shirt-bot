@@ -1,0 +1,147 @@
+<{[]}>
+**SHIRT BOT HELP**
+```
+There are 6 categories:
+
+  COMMANDS        {prefix}help commands
+  SHIRT TALK      {prefix}help shirttalk
+  SHIRT REPLY     {prefix}help shirtreply
+  SHIRT RANDOM    {prefix}help shirtrandom
+  PRECEDENCE      {prefix}help precedence
+  EXTRAS          {prefix}help extras
+
+Shirt Bot made by Cyclcrclicly (474183744685604865)
+Support server: discord.gg/KXxnPSScdn
+```
+<{[/]}>
+
+<{[commands]}>
+**COMMAND HELP**
+```
+ARGUMENT EXPLANATION (order of optional arguments matters)
+
+<argument>            required argument
+[argument]            optional argument
+[argument=default]    optional argument with a default value
+
+
+COMMAND ARGUMENTS
+
+max_size      the maximum size in tokens (word segments)
+randomness    how random the output message will be as a percentage
+chance        how likely the bot is to trigger as a percentage
+text          extra text
+channel       the channel which the command will affect
+
+
+COMMANDS
+
+{prefix}generate [max_size=80] [randomness=45] [text]
+  Generates text.
+  
+{prefix}trigger [max_size=80] [randomness=45] [text]
+  Generates text with the last 15 non-command messages as context.
+
+{prefix}shirttalk
+  In a server    lists shirt talk channels
+  In a DM        states if shirt talk is on in the DM channel
+{prefix}shirttalk set [randomness=45] [channel=message channel]
+  Sets up a shirt talk channel.
+{prefix}shirttalk unset [channel=message channel]
+  Removes a shirt talk channel.
+
+{prefix}shirtreply
+  In a server    lists shirt reply channels
+  In a DM        states if shirt reply is on in the DM channel
+{prefix}shirtreply set [randomness=45] [channel=message channel]
+  Sets up a shirt reply channel.
+{prefix}shirtreply unset [channel=message channel]
+  Removes a shirt reply channel.
+
+{prefix}shirtrandom
+  In a server    lists shirt random channels
+  In a DM        states if shirt random is on in the DM channel
+{prefix}shirtrandom set [randomness=45] [chance=5] [channel=message channel]
+  Sets up a shirt random channel.
+{prefix}shirtreply unset [channel=message channel]
+  Removes a shirt random channel.
+
+{prefix}reset
+  Once the bot encounters this command, it stops collecting further messages as context.
+
+{prefix}echo <text>
+  Repeats text.
+
+{prefix}links
+  In a server    lists all channels with uncensored links
+  In a DM        states if DM channel has (un)censored links
+{prefix}links toggle [channel=message channel]
+  Toggles censoring links in a channel.
+```
+<{[commands/]}>
+
+<{[shirttalk]}>
+**SHIRT TALK**
+```
+Shirt talk is a feature of Shirt Bot which lets it automatically reply to all messages sent in a channel.
+By default, it's off for all channels, but you can set it up using {prefix}shirttalk set... (more info in {prefix}help commands).
+The extras ({prefix}help extras) that work in shirt talk channels are '#', '# ', and '$ '.
+Shirt talk also works in DMs.
+```
+<{[shirttalk/]}>
+
+<{[shirtreply]}>
+**SHIRT REPLY**
+```
+Shirt reply is a feature of Shirt Bot which lets it trigger when you reply to one of the bot's messages.
+By default, it's off for all channels, but you can set it up using {prefix}shirtreply set... (more info in {prefix}help commands)
+The extras ({prefix}help extras) which work in shirt reply channels are '#' and '$ '.
+Shirt reply also works in DMs.
+```
+<{[shirtreply/]}>
+
+<{[shirtrandom]}>
+**SHIRT RANDOM**
+```
+Shirt random is a feature of Shirt Bot which lets it trigger randomly (customizable chance) whenever a message is sent in a channel where it's on.
+By default, it's off for all channels, but you can set it up using {prefix}shirtrandom set... (more info in {prefix}help commands)
+Extras ({prefix}help extras) don't work here.
+Shirt random also works in DMs.
+```
+<{[shirtrandom/]}>
+
+<{[precedence]}>
+**PRECEDENCE**
+```
+Precedence is a way to organize the bot's features into a hierarchy. If a feature is on/triggered, it prevents some other features from triggering.
+The precedence is:
+
+  Commands ({prefix}help commands)
+    if your message is a command, it prevents everything below from triggering
+
+  Shirt talk ({prefix}help shirttalk)
+    if your message is in a shirt talk channel, it prevents everything below from triggering
+    if none of the above features are on/triggered, shirt talk can trigger
+
+  Shirt reply ({prefix}help shirtreply)
+    if your message replies to shirt bot in a shirt reply channel, it prevents everything below from triggering
+    if none of the above features are on/triggered, shirt reply can trigger
+
+  Shirt random ({prefix}help shirtrandom)
+    if none of the above features are on/triggered, shirt random can trigger
+```
+<{[precedence/]}>
+
+<{[extras]}>
+**EXTRAS**
+```
+Extras are extra features of Shirt Bot which work in shirt talk ({prefix}help shirttalk) and shirt reply ({prefix}help shirtreply). The helps for those list exactly which extras work.
+Extras are:
+
+  '#'     if your message only contains '#', Shirt Bot will try to delete the message (unless in a DM) and trigger. This allows you to trigger the bot multiple times without having to type any new messages in between.
+
+  '# '    if your message starts with '# ', Shirt Bot will ignore the message (i.e. won't trigger), but will actually collect the message once an actual trigger occurs. This allows you to type multiple messages before triggering the bot if you wish to do that.
+
+  '$ '    if your message starts with '$ ', it will force Shirt Bot to start its next message with the content of your message. This way, you can force Shirt Bot to say something it otherwise may not have said.
+```
+<{[extras/]}>
