@@ -104,9 +104,9 @@ class Encoder:
 
 
 def get_encoder():
-    with open("encoder.json", "r") as f:
+    with open("encoder/encoder.json", "r") as f:
         encoder = json.load(f)
-    with open("vocab.bpe", "r", encoding="utf-8") as f:
+    with open("encoder/vocab.bpe", "r", encoding="utf-8") as f:
         bpe_data = f.read()
     bpe_merges = [tuple(merge_str.split()) for merge_str in bpe_data.split("\n")[1:-1]]
     return Encoder(encoder=encoder, bpe_merges=bpe_merges)
