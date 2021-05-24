@@ -170,13 +170,17 @@ async def collect_messages(channel, *, mode, before=None):
     lst.reverse()
     return lst
 
-async def send_prompt(prompt, max_tokens, temperature, stop=None):
+async def send_prompt(prompt, max_tokens, temperature, stop=None, decrease_max=False, first_line=True):
     """Sends prompt to the OpenAI API."""
 
     tokens = ENCODER.encode(prompt)
     if len(tokens) > TOKEN_LIMIT-max_tokens:
-        tokens = tokens[TOKEN_LIMIT-max_tokens:]
-        prompt = ENCODER.decode(tokens)
+        if not decrease_max:
+            tokens = tokens[:TOKEN_LIMIT-max_tokens]
+            prompt = ENCODER.decode(tokens)
+        else:
+            max_tokens = TOKEN_LIMIT-len(tokens)
+
     datadict = {
         "prompt": prompt,
         "max_tokens": max_tokens,
@@ -193,7 +197,10 @@ async def send_prompt(prompt, max_tokens, temperature, stop=None):
     async with aiohttp.ClientSession() as session:
         async with session.post(URL, headers=HEADERS, data=data) as response:
             response_text = await response.text()
-    return json.loads(response_text)["choices"][0]["text"].splitlines()[0]
+    
+    if first_line:
+        return json.loads(response_text)["choices"][0]["text"].splitlines()[0]
+    return json.loads(response_text)["choices"][0]["text"]
 
 
 # #####################################
@@ -226,10 +233,10 @@ async def update_data_files():
         file, lst = "shirt_random", shirt_random_channels
     elif operation == "UNCENSOR_LINKS":
         uncensored_link_channels.append(channel_id)
-        file, lst = "uncensored_links", uncensored_link_list
+        file, lst = "uncensored_links", uncensored_link_channels
     elif operation == "CENSOR_LINKS":
         uncensored_link_channels.remove(channel_id)
-        file, lst = "uncensored_links", uncensored_link_list
+        file, lst = "uncensored_links", uncensored_link_channels
     
     bak = open(f"data/{file}_backup.txt", "w")
     f = open(f"data/{file}.txt", "r+")

@@ -409,7 +409,7 @@ async def bot_generate(
 
     async with ctx.channel.typing():
         try:
-            response_text = await send_prompt(text, max_size, randomness/50)
+            response_text = await send_prompt(text, max_size, randomness/50, decrease_max=True, first_line=False)
         except (IndexError, KeyError):
             # In case we get no text from the API.
             response_text = ""
