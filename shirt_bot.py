@@ -785,9 +785,9 @@ async def error__links_toggle(ctx, error):
 clean_unused_channels.start()
 loop = asyncio.get_event_loop()
 try:
-    loop.run_until_complete(bot.start(BOT_TOKEN))
+    loop.run_until_complete(bot.start(TOKEN))
 except KeyboardInterrupt:
-    loop.run_until_complete(bot.logout())
+    loop.run_until_complete(bot.close())
     update_data_files.stop()
     clean_unused_channels.stop()
 finally:
