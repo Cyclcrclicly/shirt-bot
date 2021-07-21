@@ -101,10 +101,9 @@ async def shirt_talk_on_message(message):
                 f"{message.content}"
             )
         collected_messages = '\n'.join(collected_messages)
-        collected_messages = shirt_bot_to_shirtman(collected_messages)
 
         prompt = (
-            f"{shirt_bot_to_shirtman(collected_messages)}\n"
+            f"{collected_messages}\n"
             f"Shirtman:{forced_prompt}"
         )
         try:
@@ -207,7 +206,7 @@ async def shirt_reply_on_message(message):
         collected_messages = '\n'.join(collected_messages)
 
         prompt = (
-            f"{shirt_bot_to_shirtman(collected_messages)}\n"
+            f"{collected_messages}\n"
             f"Shirtman:{forced_prompt}"
         )
         try:
@@ -283,7 +282,7 @@ async def shirt_random_on_message(message):
         collected_messages = '\n'.join(collected_messages)
 
         prompt = (
-            f"{shirt_bot_to_shirtman(collected_messages)}\n"
+            f"{collected_messages}\n"
             f"Shirtman:"
         )
         try:
@@ -353,7 +352,7 @@ async def bot_trigger(
     max_size: typing.Optional[int] = 80,
     randomness: typing.Optional[float_nan_converter] = 45,
     *,
-    text: shirt_bot_to_shirtman = ""
+    text = ""
 ):
     """Sends messages as a prompt to the OpenAI API to autocomplete."""
 
@@ -378,7 +377,6 @@ async def bot_trigger(
             mode=MessageCollectionType.TRIGGER_OR_SHIRT_RANDOM
         )
         collected_messages = '\n'.join(collected_messages)
-        collected_messages = shirt_bot_to_shirtman(collected_messages)
         prompt = f"{collected_messages}\nShirtman:{' ' if text else ''}{text}"
         try:
             response_text = await send_prompt(
