@@ -21,7 +21,7 @@ async def on_ready():
 
     await bot.change_presence(
         activity=discord.Activity(
-            name="Shirt Bot",
+            name=NAME,
             type=discord.ActivityType.playing
         )
     )
@@ -104,7 +104,7 @@ async def shirt_talk_on_message(message):
 
         prompt = (
             f"{collected_messages}\n"
-            f"Shirtman:{forced_prompt}"
+            f"{NAME}:{forced_prompt}"
         )
         try:
             response_text = await send_prompt(
@@ -207,7 +207,7 @@ async def shirt_reply_on_message(message):
 
         prompt = (
             f"{collected_messages}\n"
-            f"Shirtman:{forced_prompt}"
+            f"{NAME}:{forced_prompt}"
         )
         try:
             response_text = await send_prompt(
@@ -283,7 +283,7 @@ async def shirt_random_on_message(message):
 
         prompt = (
             f"{collected_messages}\n"
-            f"Shirtman:"
+            f"{NAME}:"
         )
         try:
             response_text = await send_prompt(
@@ -377,7 +377,7 @@ async def bot_trigger(
             mode=MessageCollectionType.TRIGGER_OR_SHIRT_RANDOM
         )
         collected_messages = '\n'.join(collected_messages)
-        prompt = f"{collected_messages}\nShirtman:{' ' if text else ''}{text}"
+        prompt = f"{collected_messages}\n{NAME}:{' ' if text else ''}{text}"
         try:
             response_text = await send_prompt(
                 prompt,
