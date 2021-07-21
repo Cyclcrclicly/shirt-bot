@@ -1,6 +1,6 @@
 {
   "api_key": "YOUR API KEY",
-  "bot_token": "YOUR BOT TOKEN",
+  "token": "YOUR BOT TOKEN",
   "prefix": "YOUR PREFIX",
   "name": "THE BOT NAME"
 }

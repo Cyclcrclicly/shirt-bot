@@ -18,7 +18,7 @@ from encoder import encoder
 with open("config.json") as file:
     config = json.load(file)
 API_KEY = config["api_key"]
-BOT_TOKEN = config["bot_token"]
+TOKEN = config["token"]
 PREFIX = config["prefix"]
 NAME = config["name"]
 
@@ -141,7 +141,7 @@ def float_nan_converter(argument):
 class MessageCollectionType(enum.Enum):
     TRIGGER_OR_SHIRT_RANDOM = 0
     SHIRT_TALK = 1
-    SHIRT_REPLYING = 2
+    SHIRT_REPLY = 2
 
 
 async def collect_messages(channel, *, mode, before=None):
@@ -183,9 +183,9 @@ async def send_prompt(
     """Sends prompt to the OpenAI API."""
 
     tokens = ENCODER.encode(prompt)
-    if len(tokens) > TOKEN_LIMIT-max_tokens and not decrease_tokens:
+    if len(tokens) > TOKEN_LIMIT-max_tokens and not decrease_max:
         tokens = tokens[:TOKEN_LIMIT-max_tokens]
-    elif decrease_tokens:
+    elif decrease_max:
         max_tokens = TOKEN_LIMIT-len(tokens)
     prompt = ENCODER.decode(tokens)
 
@@ -206,7 +206,7 @@ async def send_prompt(
         async with session.post(URL, headers=HEADERS, data=data) as response:
             response_text = await response.text()
 
-    result = json.loads(resonse_text)["choices"][0]["text"]
+    result = json.loads(response_text)["choices"][0]["text"]
     return result.splitlines()[0] if first_line else result
 
 
