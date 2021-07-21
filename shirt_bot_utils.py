@@ -220,30 +220,53 @@ async def update_data_files():
 
     operation, channel_id, randomness, chance = await shirt_queue.get()
 
-    if operation == "SET_SHIRT_TALK":
-        shirt_talk_channels[channel_id] = randomness
-        file, lst = "shirt_talk", shirt_talk_channels
-    elif operation == "UNSET_SHIRT_TALK":
-        del shirt_talk_channels[channel_id]
-        file, lst = "shirt_talk", shirt_talk_channels
-    elif operation == "SET_SHIRT_REPLY":
-        shirt_reply_channels[channel_id] = randomness
-        file, lst = "shirt_reply", shirt_reply_channels
-    elif operation == "UNSET_SHIRT_REPLY":
-        del shirt_reply_channels[channel_id]
-        file, lst = "shirt_reply", shirt_reply_channels
-    elif operation == "SET_SHIRT_RANDOM":
-        shirt_random_channels[channel_id] = randomness, chance
-        file, lst = "shirt_random", shirt_random_channels
-    elif operation == "UNSET_SHIRT_RANDOM":
-        del shirt_random_channels[channel_id]
-        file, lst = "shirt_random", shirt_random_channels
-    elif operation == "UNCENSOR_LINKS":
-        uncensored_link_channels.append(channel_id)
-        file, lst = "uncensored_links", uncensored_link_channels
-    elif operation == "CENSOR_LINKS":
-        uncensored_link_channels.remove(channel_id)
-        file, lst = "uncensored_links", uncensored_link_channels
+    opdict = {
+        "SET_SHIRT_TALK": (
+            randomness,
+            "shirt_talk",
+            shirt_talk_channels
+        ),
+        "SET_SHIRT_REPLY": (
+            randomness,
+            "shirt_reply",
+            shirt_reply_channels
+        ),
+        "SET_SHIRT_RANDOM": (
+            randomness,
+            "shirt_random",
+            shirt_random_channels
+        ),
+        "UNSET_SHIRT_TALK": (
+            "shirt_talk",
+            shirt_talk_channels
+        ),
+        "UNSET_SHIRT_REPLY": (
+            "shirt_reply",
+            shirt_reply_channels
+        ),
+        "UNSET_SHIRT_RANDOM": (
+            "shirt_random",
+            shirt_random_channels
+        ),
+        "UNCENSOR_LINKS": (
+            "uncensored_links",
+            uncensored_link_channels
+        ),
+        "CENSOR_LINKS": (
+            "uncensored_links",
+            uncensored_link_channels
+        )
+    }
+
+    if operation.startswith("SET_"):
+        opdict[operation][2][channel_id] = opdict[operation][0]
+    elif operation.startswith("UNSET_"):
+        del opdict[operation][1][channel_id]
+    elif operation.startswith("UNCENSOR_"):
+        opdict[operation][1].append(channel_id)
+    elif operation.startswith("CENSOR_"):
+        opdict[operation][1].remove(channel_id)
+    file, lst = opdict[operation][0:2]
 
     bak = open(f"data/{file}_backup.txt", "w")
     f = open(f"data/{file}.txt", "r+")
