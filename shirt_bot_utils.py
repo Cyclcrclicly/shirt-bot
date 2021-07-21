@@ -22,11 +22,11 @@ BOT_TOKEN = config["bot_token"]
 PREFIX = config["prefix"]
 
 URL_PATTERN = (
-    "(https?:\/\/(?:www\.|(?!www))"
-    "[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|"
-    "www\.[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|"
-    "https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9]+\.[^\s]{2,}|"
-    "www\.[a-zA-Z0-9]+\.[^\s]{2,})"
+    r"(https?:\/\/(?:www\.|(?!www))"
+    r"[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|"
+    r"www\.[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|"
+    r"https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9]+\.[^\s]{2,}|"
+    r"www\.[a-zA-Z0-9]+\.[^\s]{2,})"
 )
 
 ENCODER = encoder.get_encoder()
@@ -86,7 +86,7 @@ with open("data/uncensored_links.txt") as file:
 
 
 class ShirtContext(commands.Context):
-    """Edited Context that can send a message while applying some filters."""
+    """Edited Context that can send a message and apply some filters."""
 
     async def shirt_send(self, content=None, **kwargs):
         msg = content
@@ -107,7 +107,7 @@ class ShirtBot(commands.Bot):
 
 
 def permissions_or_dm(**kwargs):
-    """Checks if a user is in a DM; if not, checks if they have permissions."""
+    """Returns True if a user is in a DM or if they have permissions."""
 
     async def predicate(ctx):
         return (
@@ -170,16 +170,23 @@ async def collect_messages(channel, *, mode, before=None):
     lst.reverse()
     return lst
 
-async def send_prompt(prompt, max_tokens, temperature, stop=None, decrease_max=False, first_line=True):
+
+async def send_prompt(
+    prompt,
+    max_tokens,
+    temperature,
+    stop=None,
+    decrease_max=False,
+    first_line=True
+):
     """Sends prompt to the OpenAI API."""
 
     tokens = ENCODER.encode(prompt)
-    if len(tokens) > TOKEN_LIMIT-max_tokens:
-        if not decrease_max:
-            tokens = tokens[:TOKEN_LIMIT-max_tokens]
-            prompt = ENCODER.decode(tokens)
-        else:
-            max_tokens = TOKEN_LIMIT-len(tokens)
+    if len(tokens) > TOKEN_LIMIT-max_tokens and not decrease_tokens:
+        tokens = tokens[:TOKEN_LIMIT-max_tokens]
+    elif decrease_tokens:
+        max_tokens = TOKEN_LIMIT-len(tokens)
+    prompt = ENCODER.decode(tokens)
 
     datadict = {
         "prompt": prompt,
@@ -197,10 +204,9 @@ async def send_prompt(prompt, max_tokens, temperature, stop=None, decrease_max=F
     async with aiohttp.ClientSession() as session:
         async with session.post(URL, headers=HEADERS, data=data) as response:
             response_text = await response.text()
-    
-    if first_line:
-        return json.loads(response_text)["choices"][0]["text"].splitlines()[0]
-    return json.loads(response_text)["choices"][0]["text"]
+
+    result = json.loads(resonse_text)["choices"][0]["text"]
+    return result.splitlines()[0] if first_line else result
 
 
 # #####################################
@@ -237,7 +243,7 @@ async def update_data_files():
     elif operation == "CENSOR_LINKS":
         uncensored_link_channels.remove(channel_id)
         file, lst = "uncensored_links", uncensored_link_channels
-    
+
     bak = open(f"data/{file}_backup.txt", "w")
     f = open(f"data/{file}.txt", "r+")
     bak.write(f.read())
@@ -326,7 +332,7 @@ def remove_slurs(string):
 
 
 def shirt_bot_to_shirtman(string):
-    """Replaces "shirt bot" in the text with "shirtman". Case sensitive."""
+    """Replaces "shirt bot" in text with "shirtman". Case sensitive."""
     newstring = string
     for instance in re.findall("shirt bot", string, flags=re.I):
         caselist = [
@@ -370,6 +376,7 @@ async def handle_unset_or_toggle_error(ctx, error):
             error.__traceback__,
             file=sys.stderr
         )
+
 
 async def handle_set_error(ctx, error, arguments):
     error = getattr(error, 'original', error)

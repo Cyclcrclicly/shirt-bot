@@ -65,7 +65,8 @@ async def shirt_talk_on_message(message):
             )
         return
 
-    # Whether Shirt Bot will reply to the message or not (if it gets deleted).
+    # Whether Shirt Bot will reply to the message or not.
+    # If Shirt Bot doesn't reply, the message is also deleted.
     reference = None if (
         (
             message.content == "#" or
@@ -93,8 +94,7 @@ async def shirt_talk_on_message(message):
             mode=MessageCollectionType.SHIRT_TALK,
             before=message
         )
-        # If the message doesn't get deleted (gets replied to),
-        # include it in the prompt.
+        # If the message doesn't get deleted, include it in the prompt.
         if reference is not None:
             collected_messages.append(
                 f"{message.author.name}: "
@@ -172,7 +172,8 @@ async def shirt_reply_on_message(message):
             )
             return
 
-    # Whether Shirt Bot will reply to the message or not (if it gets deleted).
+    # Whether Shirt Bot will reply to the message or not.
+    # If Shirt Bot doesn't reply, the message is also deleted.
     reference = None if (
         message.content == "#" or
         message.content.startswith("$ ")
@@ -197,8 +198,7 @@ async def shirt_reply_on_message(message):
             mode=MessageCollectionType.SHIRT_REPLY,
             before=message,
         )
-        # If the message doesn't get deleted (gets replied to),
-        # include it in the prompt.
+        # If the message doesn't get deleted, include it in the prompt.
         if reference is not None:
             collected_messages.append(
                 f"{message.author.name}: "
@@ -334,11 +334,15 @@ async def bot_help(ctx, category=''):
 
 @bot.command(name="reset", ignore_extra=False)
 async def reset_cmd(ctx):
-    """Only exists to get detected by the message collector."""
+    """Reset command that doesn't actually do anything.
+    Only exists to get detected by the message collector.
+    Allows you to delete the invoke message to undo the reset."""
 
 
 @bot.command(name="echo")
 async def echo_cmd(ctx, *, text):
+    """This command simply echoes text back to you,
+    while also applying Shirt Bot's filters"""
     await ctx.shirt_send(text)
 
 
@@ -346,10 +350,10 @@ async def echo_cmd(ctx, *, text):
 @bot.command(name="trigger")
 async def bot_trigger(
     ctx,
-    max_size: typing.Optional[int]=80,
-    randomness: typing.Optional[float_nan_converter]=45,
+    max_size: typing.Optional[int] = 80,
+    randomness: typing.Optional[float_nan_converter] = 45,
     *,
-    text: shirt_bot_to_shirtman=""
+    text: shirt_bot_to_shirtman = ""
 ):
     """Sends messages as a prompt to the OpenAI API to autocomplete."""
 
@@ -393,8 +397,8 @@ async def bot_trigger(
 @bot.command(name="generate")
 async def bot_generate(
     ctx,
-    max_size: typing.Optional[int]=80,
-    randomness: typing.Optional[float_nan_converter]=45,
+    max_size: typing.Optional[int] = 80,
+    randomness: typing.Optional[float_nan_converter] = 45,
     *,
     text=""
 ):
@@ -409,7 +413,12 @@ async def bot_generate(
 
     async with ctx.channel.typing():
         try:
-            response_text = await send_prompt(text, max_size, randomness/50, decrease_max=True, first_line=False)
+            response_text = await send_prompt(
+                text,
+                max_size, randomness/50,
+                decrease_max=True,
+                first_line=False
+            )
         except (IndexError, KeyError):
             # In case we get no text from the API.
             response_text = ""
@@ -448,10 +457,10 @@ async def shirt_talk(ctx):
 @shirt_talk.command(name="set", ignore_extra=False)
 async def shirt_talk_set(
     ctx,
-    randomness: typing.Optional[float_nan_converter]=45.0,
-    channel: discord.TextChannel=None
+    randomness: typing.Optional[float_nan_converter] = 45.0,
+    channel: discord.TextChannel = None
 ):
-    """Puts channel in the queue for adding to the shirt talk channels."""
+    """Puts channel in queue for adding to shirt talk channels."""
 
     if randomness < 0 or randomness > 100:
         await ctx.send("Randomness needs to be between 0 and 100.")
@@ -472,8 +481,8 @@ async def shirt_talk_set(
 
 @permissions_or_dm(manage_channels=True)
 @shirt_talk.command(name="unset", ignore_extra=False)
-async def shirt_talk_unset(ctx, channel: discord.TextChannel=None):
-    """Puts channel in the queue for removal from the shirt talk channels."""
+async def shirt_talk_unset(ctx, channel: discord.TextChannel = None):
+    """Puts channel in queue for removal from shirt talk channels."""
 
     channel = channel or ctx.channel
     channelstr = channel.mention if channel != ctx.channel else "This channel"
@@ -524,10 +533,10 @@ async def shirt_reply(ctx):
 @shirt_reply.command(name="set", ignore_extra=False)
 async def shirt_reply_set(
     ctx,
-    randomness: typing.Optional[float_nan_converter]=45.0,
-    channel: discord.TextChannel=None
+    randomness: typing.Optional[float_nan_converter] = 45.0,
+    channel: discord.TextChannel = None
 ):
-    """Puts channel in the queue for adding to the shirt reply channels."""
+    """Puts channel in queue for adding to shirt reply channels."""
 
     if randomness < 0 or randomness > 100:
         await ctx.send("Randomness needs to be between 0 and 100.")
@@ -548,8 +557,8 @@ async def shirt_reply_set(
 
 @permissions_or_dm(manage_channels=True)
 @shirt_reply.command(name="unset", ignore_extra=False)
-async def shirt_reply_unset(ctx, channel: discord.TextChannel=None):
-    """Puts channel in the queue for removal from the shirt reply channels."""
+async def shirt_reply_unset(ctx, channel: discord.TextChannel = None):
+    """Puts channel in queue for removal from shirt reply channels."""
 
     channel = channel or ctx.channel
     channelstr = channel.mention if channel != ctx.channel else "This channel"
@@ -602,11 +611,11 @@ async def shirt_random(ctx):
 @shirt_random.command(name="set", ignore_extra=False)
 async def shirt_random_set(
     ctx,
-    randomness: typing.Optional[float_nan_converter]=45.0,
-    chance: typing.Optional[float_nan_converter]=5.0,
-    channel: discord.TextChannel=None
+    randomness: typing.Optional[float_nan_converter] = 45.0,
+    chance: typing.Optional[float_nan_converter] = 5.0,
+    channel: discord.TextChannel = None
 ):
-    """Puts channel in the queue for adding to the shirt random channels."""
+    """Puts channel in queue for adding to shirt random channels."""
 
     if randomness < 0 or randomness > 100:
         await ctx.send("Randomness needs to be between 0 and 100.")
@@ -634,8 +643,8 @@ async def shirt_random_set(
 
 @permissions_or_dm(manage_channels=True)
 @shirt_random.command(name="unset", ignore_extra=False)
-async def shirt_random_unset(ctx, channel: discord.TextChannel=None):
-    """Puts channel in the queue for removal from the shirt random channels."""
+async def shirt_random_unset(ctx, channel: discord.TextChannel = None):
+    """Puts channel in queue for removal from shirt random channels."""
 
     channel = channel or ctx.channel
     channelstr = channel.mention if channel != ctx.channel else "This channel"
@@ -683,7 +692,7 @@ async def links(ctx):
 
 @permissions_or_dm(manage_channels=True)
 @links.command(name="toggle", ignore_extra=False)
-async def links_toggle(ctx, channel: discord.TextChannel=None):
+async def links_toggle(ctx, channel: discord.TextChannel = None):
     """Puts channel in the queue for toggling censoring channels."""
 
     channel = channel or ctx.channel

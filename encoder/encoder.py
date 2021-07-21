@@ -1,4 +1,5 @@
-# This file includes code which was modified from https://github.com/openai/gpt-2
+# This file includes slightly modified
+# code from https://github.com/openai/gpt-2
 
 import json
 import regex as re
@@ -43,7 +44,8 @@ class Encoder:
         self.bpe_ranks = dict(zip(bpe_merges, range(len(bpe_merges))))
         self.cache = {}
         self.pat = re.compile(
-            r"""'s|'t|'re|'ve|'m|'l l|'d| ?\p{L}+| ?\p{N}+| ?[^\s\p{L}\p{N}]+|\s+(?!\S)|\s+"""
+            r"""'s|'t|'re|'ve|'m|'l l|'d| ?\p{L}+| """
+            r"""?\p{N}+| ?[^\s\p{L}\p{N}]+|\s+(?!\S)|\s+"""
         )
 
     def bpe(self, token):
@@ -57,7 +59,10 @@ class Encoder:
             return token
 
         while True:
-            bigram = min(pairs, key=lambda pair: self.bpe_ranks.get(pair, float("inf")))
+            bigram = min(
+                pairs,
+                key=lambda pair: self.bpe_ranks.get(pair, float("inf"))
+            )
             if bigram not in self.bpe_ranks:
                 break
             first, second = bigram
@@ -68,11 +73,15 @@ class Encoder:
                     j = word.index(first, i)
                     new_word.extend(word[i:j])
                     i = j
-                except:
+                except IndexError:
                     new_word.extend(word[i:])
                     break
 
-                if word[i] == first and i < len(word) - 1 and word[i + 1] == second:
+                if (
+                        word[i] == first
+                        and i < len(word) - 1
+                        and word[i + 1] == second
+                ):
                     new_word.append(first + second)
                     i += 2
                 else:
@@ -92,14 +101,30 @@ class Encoder:
     def encode(self, text):
         bpe_tokens = []
         for token in re.findall(self.pat, text):
-            token = "".join(self.byte_encoder[b] for b in token.encode("utf-8"))
+            token = "".join(
+                self.byte_encoder[b]
+                for b
+                in token.encode("utf-8")
+            )
 
-            bpe_tokens.extend(self.encoder[bpe_token] for bpe_token in self.bpe(token).split(" "))
+            bpe_tokens.extend(
+                self.encoder[bpe_token]
+                for bpe_token
+                in
+                self.bpe(token).split(" ")
+            )
+
         return bpe_tokens
 
     def decode(self, tokens):
         text = "".join([self.decoder[token] for token in tokens])
-        text = bytearray([self.byte_decoder[c] for c in text]).decode("utf-8", errors=self.errors)
+        text = bytearray(
+            [self.byte_decoder[c] for c in text]
+        ).decode(
+            "utf-8",
+            errors=self.errors
+        )
+
         return text
 
 
@@ -108,8 +133,7 @@ def get_encoder():
         encoder = json.load(f)
     with open("encoder/vocab.bpe", "r", encoding="utf-8") as f:
         bpe_data = f.read()
-    bpe_merges = [tuple(merge_str.split()) for merge_str in bpe_data.split("\n")[1:-1]]
+    bpe_merges = [
+        tuple(merge_str.split()) for merge_str in bpe_data.split("\n")[1:-1]
+    ]
     return Encoder(encoder=encoder, bpe_merges=bpe_merges)
-
-# encoder = get_encoder()
-# print('encoded is ', encoder.encode('hello 👋 world 🌍 This is a long string to test whether or not the emoji issue was fixed!'))
