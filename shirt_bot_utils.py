@@ -331,25 +331,6 @@ def remove_slurs(string):
     )
 
 
-def shirt_bot_to_shirtman(string):
-    """Replaces "shirt bot" in text with "shirtman". Case sensitive."""
-    newstring = string
-    for instance in re.findall("shirt bot", string, flags=re.I):
-        caselist = [
-            (
-                str.upper if
-                x.upper() == x else
-                str.lower
-            ) for
-            x in
-            instance if
-            x != " "
-        ]
-        shirtman = "".join([f(c) for f, c in zip(caselist, "shirtman")])
-        newstring = re.sub(instance, shirtman, newstring, 1)
-    return newstring
-
-
 # ###################
 # ### Error Stuff ###
 # ###################
