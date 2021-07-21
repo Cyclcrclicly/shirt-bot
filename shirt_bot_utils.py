@@ -20,6 +20,7 @@ with open("config.json") as file:
 API_KEY = config["api_key"]
 BOT_TOKEN = config["bot_token"]
 PREFIX = config["prefix"]
+NAME = config["name"]
 
 URL_PATTERN = (
     r"(https?:\/\/(?:www\.|(?!www))"
@@ -153,7 +154,7 @@ async def collect_messages(channel, *, mode, before=None):
             break
 
         if not context.valid:
-            author = x.author.name if x.author != bot.user else 'Shirtman'
+            author = x.author.name if x.author != bot.user else NAME
             if (
                 x.content.startswith("# ") and
                 mode == MessageCollectionType.SHIRT_TALK
