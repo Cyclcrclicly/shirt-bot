@@ -125,11 +125,11 @@ Extras are:
 [python](https://www.python.org/) - at least 3.6<br>
 [regex](https://pypi.org/project/regex/)<br>
 [aiohttp](https://pypi.org/project/aiohttp/)<br>
-[discord.py](https://pypi.org/project/discord.py/) - at least 1.6.0
+[discord.py](https://pypi.org/project/discord.py/) - at least 1.6.0<br>
 # INSTRUCTIONS
 1. Download the source code, put it into a folder, and navigate to the folder.
 2. Install all requirements. You can use `pip install -r requirements.txt` or install them manually.
-3. Create a `config.json` file from the `config.json.template` file and fill it out with the correct information.
+3. Create a `config.json` file from the `config.json.template` file and fill it out with the correct information or have your environment configured with the proper information and have the `config.json`'s fields blank.
 4. Run `shirt_bot.py`.
 # CREDIT
 All the contents of the encoder folder are from https://github.com/latitudegames/GPT-3-Encoder and are thus licensed with [the MIT License](encoder/LICENSE).<br>
