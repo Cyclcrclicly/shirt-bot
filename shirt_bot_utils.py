@@ -7,20 +7,17 @@ import re
 import aiohttp
 import discord
 from discord.ext import commands, tasks
-
 from encoder import encoder
-
 
 # ################################
 # ### Bunch of Necessary Stuff ###
 # ################################
-
 with open("config.json") as file:
     config = json.load(file)
-API_KEY = config["api_key"]
-TOKEN = config["token"]
-PREFIX = config["prefix"]
-NAME = config["name"]
+API_KEY = config["api_key"] or os.getenv("api_key")
+TOKEN = config["token"] or os.getenv("token")
+PREFIX = config["prefix"] or os.getenv("prefix")
+NAME = config["name"] or os.getenv("name")
 
 URL_PATTERN = (
     r"(https?:\/\/(?:www\.|(?!www))"
