@@ -7,11 +7,13 @@ import re
 import aiohttp
 import discord
 from discord.ext import commands, tasks
+
 from encoder import encoder
 
 # ################################
 # ### Bunch of Necessary Stuff ###
 # ################################
+
 with open("config.json") as file:
     config = json.load(file)
 API_KEY = config["api_key"] or os.getenv("api_key")
