@@ -782,13 +782,12 @@ async def error__links_toggle(ctx, error):
 # #######################
 
 
-clean_unused_channels.start()
+update_data_files.start()
 loop = asyncio.get_event_loop()
 try:
     loop.run_until_complete(bot.start(TOKEN))
 except KeyboardInterrupt:
     loop.run_until_complete(bot.close())
     update_data_files.stop()
-    clean_unused_channels.stop()
 finally:
     discord.client._cleanup_loop(loop)
