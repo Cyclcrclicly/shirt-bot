@@ -129,7 +129,7 @@ Extras are:
 # INSTRUCTIONS
 1. Download the source code, put it into a folder, and navigate to the folder.
 2. Install all requirements. You can use `pip install -r requirements.txt` or install them manually.
-3. Create a `config.json` file from the `config.json.template` file and fill it out with the correct information or have your environment configured with the proper information (variables have the same name as the `config.json.template` entries) and have the `config.json`'s fields blank (still included, just make them empty).
+3. Create a `config.json` file from the `config.json.template` file and fill it out with the correct information or have your environment configured with the proper information (variables have the same name as the `config.json.template` entries) and have the `config.json`'s fields blank (still included, just make them empty). NOTE: If you want your bot to have multiple prefixes, separate them with a space in your configuration.
 4. Run `shirt_bot.py`.
 # CREDIT
 All the contents of the encoder folder are from https://github.com/latitudegames/GPT-3-Encoder and are thus licensed with [the MIT License](encoder/LICENSE).<br>
