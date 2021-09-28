@@ -416,7 +416,7 @@ async def handle_set_error(ctx, error, arguments):
 # ########################
 
 bot = ShirtBot(
-    command_prefix=PREFIX,
+    command_prefix=PREFIX.split(' '),
     help_command=None,
     allowed_mentions=discord.AllowedMentions.none()
 )
