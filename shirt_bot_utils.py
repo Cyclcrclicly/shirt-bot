@@ -221,6 +221,8 @@ async def update_data_files():
 
     operation, channel_id, randomness, chance = await shirt_queue.get()
 
+    await clean_unused_channels()
+
     opdict = {
         "SET_SHIRT_TALK": (
             randomness,
@@ -289,13 +291,10 @@ async def update_data_files():
     shirt_queue.task_done()
 
 
-@tasks.loop(minutes=60)
 async def clean_unused_channels():
 
     await bot.wait_until_ready()
 
-    if update_data_files.is_running():
-        update_data_files.stop()
     all_channels = bot.private_channels+list(bot.get_all_channels())
     all_channels = [c.id for c in all_channels]
     for channel in list(shirt_talk_channels):
@@ -310,32 +309,6 @@ async def clean_unused_channels():
     for channel in uncensored_link_channels.copy():
         if channel not in all_channels:
             uncensored_link_channels.remove(channel)
-
-    for file, lst in (
-        ("shirt_talk", shirt_talk_channels),
-        ("shirt_reply", shirt_reply_channels),
-        ("shirt_random", shirt_random_channels),
-        ("uncensored_links", uncensored_link_channels)
-    ):
-        bak = open(f"data/{file}_backup.txt", "w")
-        f = open(f"data/{file}.txt", "r+")
-        bak.write(f.read())
-        bak.close()
-        f.seek(0)
-        if file == "uncensored_links":
-            to_write = '\n'.join(map(str, lst))
-        elif file == "shirt_random":
-            to_write = '\n'.join([
-                f"{k} {' '.join(map(str, v))}" for k, v in lst.items()
-            ])
-        else:
-            to_write = '\n'.join(f"{k} {v}" for k, v in lst.items())
-        f.write(to_write)
-        f.truncate()
-        f.close()
-
-    update_data_files.start()
-
 
 # ####################
 # ### Some Filters ###
