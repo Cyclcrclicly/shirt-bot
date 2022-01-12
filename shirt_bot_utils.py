@@ -78,7 +78,7 @@ with open("data/shirt_random.txt") as file:
         int(k.split()[0]): tuple(float(x) for x in k.split()[1:])
         for k in file.read().split('\n')
         if k
-    }
+
 with open("data/uncensored_links.txt") as file:
     uncensored_link_channels = [int(k) for k in file.read().split('\n') if k]
 
@@ -236,6 +236,7 @@ async def update_data_files():
         ),
         "SET_SHIRT_RANDOM": (
             randomness,
+            chance,
             "shirt_random",
             shirt_random_channels
         ),
@@ -261,7 +262,9 @@ async def update_data_files():
         )
     }
 
-    if operation.startswith("SET_"):
+    if operation == "SET_SHIRT_RANDOM":
+        opdict[operation][3][channel_id] = tuple(opdict[operation][:2])
+    elif operation.startswith("SET_"):
         opdict[operation][2][channel_id] = opdict[operation][0]
     elif operation.startswith("UNSET_"):
         del opdict[operation][1][channel_id]
@@ -269,7 +272,7 @@ async def update_data_files():
         opdict[operation][1].append(channel_id)
     elif operation.startswith("CENSOR_"):
         opdict[operation][1].remove(channel_id)
-    file, lst = opdict[operation][0:2]
+    file, lst = opdict[operation][-2:]
 
     bak = open(f"data/{file}_backup.txt", "w")
     f = open(f"data/{file}.txt", "r+")
