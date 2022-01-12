@@ -216,7 +216,7 @@ async def shirt_reply_on_message(message):
                 shirt_reply_channels[message.channel.id]/50,
                 ["\n"]
             )
-        except IndexError:
+        except (IndexError, KeyError):
             # The API didn't return any text.
             return
 
@@ -292,7 +292,7 @@ async def shirt_random_on_message(message):
                 shirt_random_channels[message.channel.id][0]/50,
                 ["\n"]
             )
-        except IndexError:
+        except (IndexError, KeyError):
             # The API didn't return any text.
             return
 
