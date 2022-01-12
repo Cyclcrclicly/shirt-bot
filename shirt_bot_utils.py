@@ -78,7 +78,6 @@ with open("data/shirt_random.txt") as file:
         int(k.split()[0]): tuple(float(x) for x in k.split()[1:])
         for k in file.read().split('\n')
         if k
-
 with open("data/uncensored_links.txt") as file:
     uncensored_link_channels = [int(k) for k in file.read().split('\n') if k]
 
@@ -316,6 +315,7 @@ async def clean_unused_channels():
 # ####################
 # ### Some Filters ###
 # ####################
+
 
 def remove_links(string):
     """Removes links from a string."""

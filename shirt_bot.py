@@ -352,7 +352,7 @@ async def bot_trigger(
     max_size: typing.Optional[int] = 80,
     randomness: typing.Optional[float_nan_converter] = 45,
     *,
-    text = ""
+    text=""
 ):
     """Sends messages as a prompt to the OpenAI API to autocomplete."""
 
