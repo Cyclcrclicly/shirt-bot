@@ -36,7 +36,12 @@ HEADERS = {
     'Content-Type': 'application/json',
     'Authorization': f'Bearer {API_KEY}',
 }
-URL = 'https://api.openai.com/v1/engines/davinci/completions'
+# Currently available relevant engines:
+#   https://api.openai.com/v1/engines/ada/completions
+#   https://api.openai.com/v1/engines/babbage/completions
+#   https://api.openai.com/v1/engines/curie/completions
+#   https://api.openai.com/v1/engines/davinci/completions [default]
+ENGINE = 'https://api.openai.com/v1/engines/davinci/completions'
 TOKEN_LIMIT = 2048
 with open("help_text.txt") as file:
     HELP_TEXT = file.read()
@@ -204,7 +209,11 @@ async def send_prompt(
         datadict["stop"] = stop
     data = json.dumps(datadict, separators=(",", ":"))
     async with aiohttp.ClientSession() as session:
-        async with session.post(URL, headers=HEADERS, data=data) as response:
+        async with session.post(
+            ENGINE,
+            headers=HEADERS,
+            data=data
+        ) as response:
             response_text = await response.text()
 
     result = json.loads(response_text)["choices"][0]["text"]
