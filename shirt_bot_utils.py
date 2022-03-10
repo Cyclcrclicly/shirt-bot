@@ -113,6 +113,17 @@ class ShirtBot(commands.Bot):
         )
 
 
+class CustomTextChannelConverter(commands.TextChannelConverter):
+    """Custom text channel converter which prevents guild channels being
+    recognized in DMs."""
+
+    async def convert(self, ctx, argument):
+        channel = await super().convert(ctx, argument)
+        if not ctx.guild and channel != ctx.channel:
+            raise commands.ChannelNotFound(channel.id)
+        return channel
+
+
 def permissions_or_dm(**kwargs):
     """Returns True if a user is in a DM or if they have permissions."""
 

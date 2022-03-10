@@ -456,7 +456,7 @@ async def shirt_talk(ctx):
 async def shirt_talk_set(
     ctx,
     randomness: typing.Optional[float_nan_converter] = 45.0,
-    channel: discord.TextChannel = None
+    channel: CustomTextChannelConverter = None
 ):
     """Puts channel in queue for adding to shirt talk channels."""
 
@@ -479,7 +479,7 @@ async def shirt_talk_set(
 
 @permissions_or_dm(manage_channels=True)
 @shirt_talk.command(name="unset", ignore_extra=False)
-async def shirt_talk_unset(ctx, channel: discord.TextChannel = None):
+async def shirt_talk_unset(ctx, channel: CustomTextChannelConverter = None):
     """Puts channel in queue for removal from shirt talk channels."""
 
     channel = channel or ctx.channel
@@ -532,7 +532,7 @@ async def shirt_reply(ctx):
 async def shirt_reply_set(
     ctx,
     randomness: typing.Optional[float_nan_converter] = 45.0,
-    channel: discord.TextChannel = None
+    channel: CustomTextChannelConverter = None
 ):
     """Puts channel in queue for adding to shirt reply channels."""
 
@@ -555,7 +555,7 @@ async def shirt_reply_set(
 
 @permissions_or_dm(manage_channels=True)
 @shirt_reply.command(name="unset", ignore_extra=False)
-async def shirt_reply_unset(ctx, channel: discord.TextChannel = None):
+async def shirt_reply_unset(ctx, channel: CustomTextChannelConverter = None):
     """Puts channel in queue for removal from shirt reply channels."""
 
     channel = channel or ctx.channel
@@ -611,7 +611,7 @@ async def shirt_random_set(
     ctx,
     randomness: typing.Optional[float_nan_converter] = 45.0,
     chance: typing.Optional[float_nan_converter] = 5.0,
-    channel: discord.TextChannel = None
+    channel: CustomTextChannelConverter = None
 ):
     """Puts channel in queue for adding to shirt random channels."""
 
@@ -641,7 +641,7 @@ async def shirt_random_set(
 
 @permissions_or_dm(manage_channels=True)
 @shirt_random.command(name="unset", ignore_extra=False)
-async def shirt_random_unset(ctx, channel: discord.TextChannel = None):
+async def shirt_random_unset(ctx, channel: CustomTextChannelConverter = None):
     """Puts channel in queue for removal from shirt random channels."""
 
     channel = channel or ctx.channel
@@ -690,7 +690,7 @@ async def links(ctx):
 
 @permissions_or_dm(manage_channels=True)
 @links.command(name="toggle", ignore_extra=False)
-async def links_toggle(ctx, channel: discord.TextChannel = None):
+async def links_toggle(ctx, channel: CustomTextChannelConverter = None):
     """Puts channel in the queue for toggling censoring channels."""
 
     channel = channel or ctx.channel
