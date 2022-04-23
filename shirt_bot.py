@@ -68,10 +68,8 @@ async def shirt_talk_on_message(message):
     # Whether Shirt Bot will reply to the message or not.
     # If Shirt Bot doesn't reply, the message is also deleted.
     reference = None if (
-        (
-            message.content == "#" or
-            message.content.startswith("$ ")
-        ) and not message.guild
+        message.content == "#" or
+        message.content.startswith("$ ")
     ) else message
 
     if reference is None:
