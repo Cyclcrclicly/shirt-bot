@@ -406,7 +406,8 @@ async def bot_generate_instruct(
         try:
             response_text = await send_prompt(
                 text,
-                max_size, randomness/50,
+                max_size,
+                randomness/50,
                 decrease_max=True,
                 first_line=False,
                 instruct=(ctx.invoked_with == "instruct")
