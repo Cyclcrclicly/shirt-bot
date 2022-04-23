@@ -390,8 +390,8 @@ async def bot_trigger(
     await ctx.shirt_send(f"{text}{response_text}", reference=ctx.message)
 
 
-@bot.command(name="generate")
-async def bot_generate(
+@bot.command(name="generate", aliases=["instruct"])
+async def bot_generate_instruct(
     ctx,
     max_size: typing.Optional[int] = 80,
     randomness: typing.Optional[float_nan_converter] = 45,
@@ -399,7 +399,6 @@ async def bot_generate(
     text=""
 ):
     """Generates text using the OpenAI API."""
-
     if randomness > 100 or randomness < 0:
         await ctx.send("Randomness has to be between 0 and 100.")
         return
@@ -413,7 +412,8 @@ async def bot_generate(
                 text,
                 max_size, randomness/50,
                 decrease_max=True,
-                first_line=False
+                first_line=False,
+                instruct=(ctx.invoked_with == "instruct")
             )
         except (IndexError, KeyError):
             # In case we get no text from the API.

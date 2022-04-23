@@ -36,12 +36,37 @@ HEADERS = {
     'Content-Type': 'application/json',
     'Authorization': f'Bearer {API_KEY}',
 }
-# Currently available relevant engines:
-#   https://api.openai.com/v1/engines/ada/completions
-#   https://api.openai.com/v1/engines/babbage/completions
-#   https://api.openai.com/v1/engines/curie/completions
-#   https://api.openai.com/v1/engines/davinci/completions [default]
-ENGINE = 'https://api.openai.com/v1/engines/davinci/completions'
+# Regular engines:
+#   Name                Price per 1000 tokens
+#
+#   ada                 $0.0008
+#   babbage             $0.0012
+#   curie               $0.0060
+#   davinci             $0.0600
+
+# Instruct engines:
+#   Name                Price per 1000 tokens
+#
+#   text-ada-001        $0.0008
+#   text-babbage-001    $0.0012
+#   text-curie-001      $0.0060
+#   text-davinci-001    $0.0600
+#   text-davinci-002*   $0.0600
+#
+#   *Better than text-davinci-001
+
+# Change these to fit your choices, information above
+REGULAR_ENGINE = 'davinci'
+INSTRUCT_ENGINE = 'text-davinci-002'
+
+regular_engine_url = (
+    f"https://api.openai.com/v1/engines/{REGULAR_ENGINE}/completions"
+)
+
+instruct_engine_url = (
+    f"https://api.openai.com/v1/engines/{INSTRUCT_ENGINE}/completions"
+)
+
 TOKEN_LIMIT = 2048
 with open("help_text.txt") as file:
     HELP_TEXT = file.read()
@@ -195,7 +220,8 @@ async def send_prompt(
     temperature,
     stop=None,
     decrease_max=False,
-    first_line=True
+    first_line=True,
+    instruct=False
 ):
     """Sends prompt to the OpenAI API."""
 
@@ -221,7 +247,7 @@ async def send_prompt(
     data = json.dumps(datadict, separators=(",", ":"))
     async with aiohttp.ClientSession() as session:
         async with session.post(
-            ENGINE,
+            regular_engine_url if not instruct else instruct_engine_url,
             headers=HEADERS,
             data=data
         ) as response:
