@@ -3,12 +3,12 @@
 ```
 There are 6 categories:
 
-  COMMANDS        {prefix}help commands
-  SHIRT TALK      {prefix}help shirttalk
-  SHIRT REPLY     {prefix}help shirtreply
-  SHIRT RANDOM    {prefix}help shirtrandom
-  PRECEDENCE      {prefix}help precedence
-  EXTRAS          {prefix}help extras
+  COMMANDS        help commands
+  SHIRT TALK      help shirttalk
+  SHIRT REPLY     help shirtreply
+  SHIRT RANDOM    help shirtrandom
+  PRECEDENCE      help precedence
+  EXTRAS          help extras
 
 Shirt Bot made by Cyclcrclicly#3420 (474183744685604865)
 Support server: discord.gg/KXxnPSScdn
@@ -36,46 +36,49 @@ channel       the channel which the command will affect
 
 COMMANDS
 
-{prefix}generate [max_size=80] [randomness=45] [text]
+generate [max_size=80] [randomness=45] [text]
   Generates text.
+
+instruct [max_size=80] [randomness=45] [text]
+  Generates text with instruction (e.g. "Write an essay about ...").
   
-{prefix}trigger [max_size=80] [randomness=45] [text]
+trigger [max_size=80] [randomness=45] [text]
   Generates text with the last 15 non-command messages as context.
 
-{prefix}shirttalk
+shirttalk
   In a server    lists shirt talk channels
-  In a DM        states if shirt talk is on in the DM channel
-{prefix}shirttalk set [randomness=45] [channel=message channel]
+  In a DM        states shirt talk status in the DM channel
+shirttalk set [randomness=45] [channel=current channel]
   Sets up a shirt talk channel.
-{prefix}shirttalk unset [channel=message channel]
+shirttalk unset [channel=message channel]
   Removes a shirt talk channel.
 
-{prefix}shirtreply
+shirtreply
   In a server    lists shirt reply channels
-  In a DM        states if shirt reply is on in the DM channel
-{prefix}shirtreply set [randomness=45] [channel=message channel]
+  In a DM        states shirt reply status in the DM channel
+shirtreply set [randomness=45] [channel=current channel]
   Sets up a shirt reply channel.
-{prefix}shirtreply unset [channel=message channel]
+shirtreply unset [channel=message channel]
   Removes a shirt reply channel.
 
-{prefix}shirtrandom
+shirtrandom
   In a server    lists shirt random channels
-  In a DM        states if shirt random is on in the DM channel
-{prefix}shirtrandom set [randomness=45] [chance=5] [channel=message channel]
+  In a DM        states shirt random status in the DM channel
+shirtrandom set [randomness=45] [chance=5] [channel=current channel]
   Sets up a shirt random channel.
-{prefix}shirtreply unset [channel=message channel]
+shirtreply unset [channel=message channel]
   Removes a shirt random channel.
 
-{prefix}reset
-  Once the bot encounters this command, it stops collecting further messages as context.
+reset
+  Don't collect messages beyond this command.
 
-{prefix}echo <text>
+echo <text>
   Repeats text.
 
-{prefix}links
+links
   In a server    lists all channels with uncensored links
-  In a DM        states if DM channel has (un)censored links
-{prefix}links toggle [channel=message channel]
+  In a DM        states censored links status of DM channel
+links toggle [channel=message channel]
   Toggles censoring links in a channel.
 ```
 <{[commands/]}>
