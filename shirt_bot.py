@@ -307,11 +307,7 @@ async def shirt_random_on_message(message):
 async def bot_help(ctx, category=''):
     """The help command. Help text is stored in help_text.txt."""
     try:
-        await ctx.author.send(
-            help_categories[category].format(
-                prefix=ctx.prefix
-            )
-        )
+        await ctx.author.send(help_categories[category])
     except discord.Forbidden:
         await ctx.send(
             "Please allow Shirt Bot to "
@@ -322,7 +318,7 @@ async def bot_help(ctx, category=''):
     except KeyError:
         await ctx.send(
             f"Invalid help category. Please use "
-            f"{ctx.prefix}help to see all categories."
+            f"the help command with no arguments to see all categories."
         )
 
 
