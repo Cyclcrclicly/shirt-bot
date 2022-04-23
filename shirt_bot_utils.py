@@ -228,7 +228,7 @@ async def send_prompt(
     tokens = ENCODER.encode(prompt)
     if len(tokens) > TOKEN_LIMIT-max_tokens and not decrease_max:
         tokens = tokens[:TOKEN_LIMIT-max_tokens]
-    elif decrease_max:
+    elif len(tokens) > TOKEN_LIMIT-max_tokens and decrease_max:
         max_tokens = TOKEN_LIMIT-len(tokens)
     prompt = ENCODER.decode(tokens)
 
