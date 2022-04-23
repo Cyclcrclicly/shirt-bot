@@ -109,7 +109,6 @@ async def shirt_talk_on_message(message):
                 prompt,
                 100,
                 shirt_talk_channels[message.channel.id]/50,
-                ["\n"]
             )
         except (IndexError, KeyError):
             # The API didn't return any text.
@@ -212,7 +211,6 @@ async def shirt_reply_on_message(message):
                 prompt,
                 100,
                 shirt_reply_channels[message.channel.id]/50,
-                ["\n"]
             )
         except (IndexError, KeyError):
             # The API didn't return any text.
@@ -288,7 +286,6 @@ async def shirt_random_on_message(message):
                 prompt,
                 100,
                 shirt_random_channels[message.channel.id][0]/50,
-                ["\n"]
             )
         except (IndexError, KeyError):
             # The API didn't return any text.
@@ -381,7 +378,6 @@ async def bot_trigger(
                 prompt,
                 max_size,
                 randomness/50,
-                ["\n"]
             )
         except (IndexError, KeyError):
             # In case we get no text from the API.

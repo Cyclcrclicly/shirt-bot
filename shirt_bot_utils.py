@@ -218,7 +218,7 @@ async def send_prompt(
     prompt,
     max_tokens,
     temperature,
-    stop=None,
+    *,
     decrease_max=False,
     first_line=True,
     instruct=False
@@ -242,8 +242,8 @@ async def send_prompt(
         "presence_penalty": 0.5,
         "frequency_penalty": 0.1
     }
-    if stop is not None:
-        datadict["stop"] = stop
+    if first_line:
+        datadict["stop"] = ["\n"]
     data = json.dumps(datadict, separators=(",", ":"))
     async with aiohttp.ClientSession() as session:
         async with session.post(
@@ -254,7 +254,7 @@ async def send_prompt(
             response_text = await response.text()
 
     result = json.loads(response_text)["choices"][0]["text"]
-    return result.splitlines()[0] if first_line else result
+    return result
 
 
 # #####################################
