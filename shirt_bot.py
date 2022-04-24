@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 import asyncio
 import contextlib
 import traceback
