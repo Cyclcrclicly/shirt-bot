@@ -38,11 +38,13 @@ async def shirt_talk_on_message(message):
     # Cases where shirt talk doesn't need to trigger:
     #  - the message is a command
     #  - the message author is a bot
+    #  - the message is a system message
     #  - channel is not a shirt talk channel
     #  - message is a non-triggering message
     if (
         ctx.valid or
         message.author.bot or
+        message.type != discord.MessageType.default or
         message.channel.id not in shirt_talk_channels or
         message.content.startswith("# ")
     ):
@@ -132,6 +134,7 @@ async def shirt_reply_on_message(message):
     # Cases where shirt reply doesn't need to trigger:
     #  - the message is a command
     #  - the message author is a bot
+    #  - the message is a system message
     #  - messsage doesn't reply to anyone
     #  - message is in a Shirt Talk channel
     #  - message is not in a shirt reply channel
@@ -139,6 +142,7 @@ async def shirt_reply_on_message(message):
     if (
         ctx.valid or
         message.author.bot or
+        message.type != discord.MessageType.default or
         not message.reference or
         message.channel.id in shirt_talk_channels or
         message.channel.id not in shirt_reply_channels
@@ -234,6 +238,7 @@ async def shirt_random_on_message(message):
     # Cases where shirt random doesn't need to trigger:
     #  - the message is a command
     #  - the message author is a bot
+    #  - the message is a system message
     #  - message is in a shirt talk channel
     #  - message is not in a shirt random channel
     #  - message replies to Shirt Bot in a shirt reply channel
@@ -241,6 +246,7 @@ async def shirt_random_on_message(message):
     if (
         ctx.valid or
         ctx.author.bot or
+        message.type != discord.MessageType.default or
         ctx.channel.id in shirt_talk_channels or
         ctx.channel.id not in shirt_random_channels
     ):
