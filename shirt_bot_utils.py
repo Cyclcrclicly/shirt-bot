@@ -195,7 +195,7 @@ async def collect_messages(channel, *, mode, before=None):
         if context.valid and context.command.name == "reset":
             break
 
-        if not context.valid and message.type != discord.MessageType.default:
+        if not context.valid and x.type != discord.MessageType.default:
             author = x.author.name if x.author != bot.user else NAME
             if (
                 x.content.startswith("# ") and
