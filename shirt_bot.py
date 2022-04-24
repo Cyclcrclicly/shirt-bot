@@ -778,13 +778,6 @@ async def error__links_toggle(ctx, error):
 # ### Running The Bot ###
 # #######################
 
-
 update_data_files.start()
-loop = asyncio.get_event_loop()
-try:
-    loop.run_until_complete(bot.start(TOKEN))
-except KeyboardInterrupt:
-    loop.run_until_complete(bot.close())
-    update_data_files.stop()
-finally:
-    discord.client._cleanup_loop(loop)
+bot.run(TOKEN)
+update_data_files.stop()
