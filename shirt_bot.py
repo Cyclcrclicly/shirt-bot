@@ -117,7 +117,7 @@ async def shirt_talk_on_message(message):
             # The API didn't return any text.
             return
 
-    with contextlib.suppress(discord.Forbidden):
+    with contextlib.suppress(discord.Forbidden, discord.HTTPException):
         await ctx.shirt_send(
             f"{forced_prompt}{response_text}",
             reference=reference
@@ -221,7 +221,7 @@ async def shirt_reply_on_message(message):
             # The API didn't return any text.
             return
 
-    with contextlib.suppress(discord.Forbidden):
+    with contextlib.suppress(discord.Forbidden, discord.HTTPException):
         await ctx.shirt_send(
             f"{forced_prompt}{response_text}",
             reference=reference
@@ -298,7 +298,7 @@ async def shirt_random_on_message(message):
             # The API didn't return any text.
             return
 
-    with contextlib.suppress(discord.Forbidden):
+    with contextlib.suppress(discord.Forbidden, discord.HTTPException):
         await ctx.shirt_send(
             response_text,
             reference=message
