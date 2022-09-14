@@ -51,7 +51,7 @@ async def shirt_talk_on_message(message):
     ):
         return
 
-    perms = ctx.guild.me.permissions_in(message.channel) if ctx.guild else None
+    perms = message.channel.permissions_for(ctx.guild.me) if ctx.guild else None
     if (message.guild and not perms.read_message_history):
         with contextlib.suppress(discord.Forbidden):
             await message.channel.send(
@@ -84,7 +84,7 @@ async def shirt_talk_on_message(message):
     ) else ""
 
     try:
-        await message.channel.trigger_typing()
+        await message.channel.typing()
     except discord.Forbidden:
         return
 
@@ -156,7 +156,7 @@ async def shirt_reply_on_message(message):
     ):
         return
 
-    perms = ctx.guild.me.permissions_in(message.channel) if ctx.guild else None
+    perms = message.channel.permissions_for(ctx.guild.me) if ctx.guild else None
     if message.guild and not perms.read_message_history:
         with contextlib.suppress(discord.Forbidden):
             await message.channel.send(
@@ -188,7 +188,7 @@ async def shirt_reply_on_message(message):
     ) else ""
 
     try:
-        await message.channel.trigger_typing()
+        await message.channel.typing()
     except discord.Forbidden:
         return
 
@@ -259,7 +259,7 @@ async def shirt_random_on_message(message):
     ):
         return
 
-    perms = ctx.guild.me.permissions_in(ctx.channel) if ctx.guild else None
+    perms = ctx.channel.permissions_for(ctx.guild.me) if ctx.guild else None
     if ctx.guild and not perms.read_message_history:
         with contextlib.suppress(discord.Forbidden):
             await ctx.send(
@@ -272,7 +272,7 @@ async def shirt_random_on_message(message):
         return
 
     try:
-        await ctx.channel.trigger_typing()
+        await ctx.channel.typing()
     except discord.Forbidden:
         return
 
@@ -361,7 +361,7 @@ async def bot_trigger(
         await ctx.send(f"Max size has to be between 1 and {TOKEN_LIMIT}.")
         return
 
-    perms = ctx.guild.me.permissions_in(ctx.channel) if ctx.guild else None
+    perms = ctx.channel.permissions_for(ctx.guild.me) if ctx.guild else None
     if ctx.guild and not perms.read_message_history:
         await ctx.channel.send(
             "I need the `Read Message History` "
