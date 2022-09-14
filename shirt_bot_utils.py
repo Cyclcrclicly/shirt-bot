@@ -1,5 +1,6 @@
 import asyncio
 import contextlib
+import traceback
 import enum
 import json
 import os
@@ -73,6 +74,8 @@ with open("help_text.txt") as file:
 matches = re.findall(r"<\{\[(.*)]}>(.+)<\{\[\1/]}>", HELP_TEXT, flags=re.S)
 help_categories = {k: v.strip() for k, v in matches}
 
+intents = discord.Intents.default()
+intents.message_content = True
 
 shirt_queue = asyncio.Queue(maxsize=1)
 
@@ -136,6 +139,9 @@ class ShirtBot(commands.Bot):
             message,
             cls=cls if cls is not None else ShirtContext
         )
+    
+    async def setup_hook(self):
+        update_data_files.start()
 
 
 class CustomTextChannelConverter(commands.TextChannelConverter):
@@ -344,7 +350,7 @@ async def clean_unused_channels():
 
     await bot.wait_until_ready()
 
-    all_channels = bot.private_channels+list(bot.get_all_channels())
+    all_channels = list(bot.private_channels)+list(bot.get_all_channels())
     all_channels = [c.id for c in all_channels]
     for channel in list(shirt_talk_channels):
         if channel not in all_channels:
@@ -441,5 +447,6 @@ async def handle_set_error(ctx, error, arguments):
 bot = ShirtBot(
     command_prefix=PREFIX.split(' '),
     help_command=None,
-    allowed_mentions=discord.AllowedMentions.none()
+    allowed_mentions=discord.AllowedMentions.none(),
+    intents=intents
 )

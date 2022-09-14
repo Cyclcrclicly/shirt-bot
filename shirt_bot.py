@@ -779,6 +779,5 @@ async def error__links_toggle(ctx, error):
 # ### Running The Bot ###
 # #######################
 
-update_data_files.start()
 bot.run(TOKEN)
 update_data_files.stop()
