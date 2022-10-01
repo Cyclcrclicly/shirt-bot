@@ -464,7 +464,7 @@ async def shirt_talk_set(
 
     channel = channel or ctx.channel
 
-    await shirt_queue.put((
+    await bot.queue.put((
         "SET_SHIRT_TALK",
         channel.id,
         randomness,
@@ -487,7 +487,7 @@ async def shirt_talk_unset(ctx, channel: CustomTextChannelConverter = None):
         await ctx.send(f"{channelstr} is not a shirt talk channel.")
         return
 
-    await shirt_queue.put((
+    await bot.queue.put((
         "UNSET_SHIRT_TALK",
         channel.id,
         None,
@@ -540,7 +540,7 @@ async def shirt_reply_set(
 
     channel = channel or ctx.channel
 
-    await shirt_queue.put((
+    await bot.queue.put((
         "SET_SHIRT_REPLY",
         channel.id,
         randomness,
@@ -563,7 +563,7 @@ async def shirt_reply_unset(ctx, channel: CustomTextChannelConverter = None):
         await ctx.send(f"{channelstr} is not a shirt reply channel.")
         return
 
-    await shirt_queue.put((
+    await bot.queue.put((
         "UNSET_SHIRT_REPLY",
         channel.id,
         None,
@@ -622,7 +622,7 @@ async def shirt_random_set(
 
     channel = channel or ctx.channel
 
-    await shirt_queue.put((
+    await bot.queue.put((
         "SET_SHIRT_RANDOM",
         channel.id,
         randomness,
@@ -649,7 +649,7 @@ async def shirt_random_unset(ctx, channel: CustomTextChannelConverter = None):
         await ctx.send(f"{channelstr} is not a shirt random channel.")
         return
 
-    await shirt_queue.put((
+    await bot.queue.put((
         "UNSET_SHIRT_RANDOM",
         channel.id,
         None,
@@ -699,7 +699,7 @@ async def links_toggle(ctx, channel: CustomTextChannelConverter = None):
     else:
         op = "UNCENSOR_LINKS"
 
-    await shirt_queue.put((
+    await bot.queue.put((
         op,
         channel.id,
         None,

@@ -77,8 +77,6 @@ help_categories = {k: v.strip() for k, v in matches}
 intents = discord.Intents.default()
 intents.message_content = True
 
-shirt_queue = asyncio.Queue(maxsize=1)
-
 # ###############################################################
 # ### Creating Data Files and Directories if They Don't Exist ###
 # ###############################################################
@@ -133,7 +131,7 @@ class ShirtContext(commands.Context):
 
 class ShirtBot(commands.Bot):
     """The Shirt Bot class"""
-
+    
     async def get_context(self, message, cls=None):
         return await super().get_context(
             message,
@@ -141,6 +139,7 @@ class ShirtBot(commands.Bot):
         )
     
     async def setup_hook(self):
+        self.queue = asyncio.Queue(maxsize=1)
         update_data_files.start()
 
 
@@ -271,7 +270,7 @@ async def send_prompt(
 async def update_data_files():
     """Updates data files."""
 
-    operation, channel_id, randomness, chance = await shirt_queue.get()
+    operation, channel_id, randomness, chance = await bot.queue.get()
 
     await clean_unused_channels()
 
@@ -343,7 +342,7 @@ async def update_data_files():
     f.truncate()
     f.close()
 
-    shirt_queue.task_done()
+    bot.queue.task_done()
 
 
 async def clean_unused_channels():
