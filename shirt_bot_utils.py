@@ -38,27 +38,31 @@ HEADERS = {
     'Authorization': f'Bearer {API_KEY}',
 }
 # Regular engines:
-#   Name                Price per 1000 tokens
+#   Name
 #
-#   ada                 $0.0008
-#   babbage             $0.0012
-#   curie               $0.0060
-#   davinci             $0.0600
+#   ada
+#   babbage
+#   curie
+#   davinci
 
 # Instruct engines:
-#   Name                Price per 1000 tokens
+#   Name
 #
-#   text-ada-001        $0.0008
-#   text-babbage-001    $0.0012
-#   text-curie-001      $0.0060
-#   text-davinci-001    $0.0600
-#   text-davinci-002*   $0.0600
+#   text-ada-001
+#   text-babbage-001
+#   text-curie-001
+#   text-davinci-001
+#   text-davinci-002*
+#   text-davinci-003**
 #
 #   *Better than text-davinci-001
+#   **Better than text-davinci-002
+
+# Engine pricing: https://openai.com/api/pricing/
 
 # Change these to fit your choices, information above
 REGULAR_ENGINE = 'davinci'
-INSTRUCT_ENGINE = 'text-davinci-002'
+INSTRUCT_ENGINE = 'text-davinci-003'
 
 regular_engine_url = (
     f"https://api.openai.com/v1/engines/{REGULAR_ENGINE}/completions"
