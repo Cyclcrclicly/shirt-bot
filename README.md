@@ -125,7 +125,7 @@ Extras are:
 [python](https://www.python.org/) - at least 3.6<br>
 [regex](https://pypi.org/project/regex/)<br>
 [aiohttp](https://pypi.org/project/aiohttp/)<br>
-[discord.py](https://pypi.org/project/discord.py/) - at least 1.6.0
+[discord.py](https://pypi.org/project/discord.py/) - at least 2.0.0
 # INSTRUCTIONS
 1. Download the source code, put it into a folder, and navigate to the folder.
 2. Install all requirements. You can use `pip install -r requirements.txt` or install them manually.
